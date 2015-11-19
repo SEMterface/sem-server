@@ -1,5 +1,4 @@
-SEMterface
-==========
+# sem-server
 
 [![Build Status](https://travis-ci.org/SEMterface/semterface.svg)](https://travis-ci.org/SEMterface/semterface)
 [![Dependencies](https://david-dm.org/SEMterface/semterface.svg)](https://david-dm.org/SEMterface/semterface)

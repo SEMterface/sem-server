@@ -1,9 +1,30 @@
-var express = require('express');
-var router = express.Router();
+var routes = []
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// Dont forget to encode user input!
+// reply('Hello, ' + encodeURIComponent(request.params.name) + '!')
 
-module.exports = router;
+routes.push({
+  method: 'GET',
+  path: '/',
+  handler: function (request, reply) {
+    reply('Hello, world!')
+  }
+})
+
+routes.push({
+  method: 'GET',
+  path: '/{name}',
+  handler: function (request, reply) {
+    reply('Hello, ' + encodeURIComponent(request.params.name) + '!')
+  }
+})
+
+routes.push({
+  method: 'GET',
+  path: '/hello',
+  handler: function (request, reply) {
+    reply.file('./public/hello.html')
+  }
+})
+
+module.exports = routes

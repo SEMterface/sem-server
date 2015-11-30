@@ -24,15 +24,15 @@ var favicon = require('serve-favicon')
 
 var router = HttpHashRouter()
 
-var static = path.join(__dirname, 'static')
+var staticPath = path.join(__dirname, 'static')
 
 router.set('/static/*', st({
-  path: static,
+  path: staticPath,
   url: '/static'
 }))
 
-router.set('/favicon.ico', function serverFavicon(req, res, opts, cb) {
-  var iconPath = path.join(static, 'favicon.ico')
+router.set('/favicon.ico', function serverFavicon (req, res, opts, cb) {
+  var iconPath = path.join(staticPath, 'favicon.ico')
   favicon(iconPath)(req, res, cb)
 })
 

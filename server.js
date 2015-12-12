@@ -10,41 +10,60 @@ if (argv.uid) process.setuid(argv.uid)
 
 var http = require('http')
 var st = require('st')
-var body = require('body/any')
-var xtend = require('xtend')
+// var body = require('body/any')
+var assign = Object.assign
 var trumpet = require('trumpet')
-var through = require('through2')
-var encode = require('he').encode
+// var through = require('through2')
 var fs = require('fs')
 var path = require('path')
+// var encode = encodeURIComponent
+// var methods = require('http-methods')
 var HttpHashRouter = require('http-hash-router')
-var methods = require('http-methods')
-var path = require('path')
 var favicon = require('serve-favicon')
-
+var finalhandler = require('finalhandler')
+var logger = require('morgan')
+var series = require('run-series')
 var router = HttpHashRouter()
 
+var React = require('react')
+var createStore = require('redux').createStore
+var Provider = require('react-redux').Provider
+var renderToString = require('react-dom/server').renderToString
+var semterface = require('semterface')
+var reducer = semterface.reducer
+var container = semterface.container
+
 var staticPath = path.join(__dirname, 'static')
+var iconPath = path.join(staticPath, 'favicon.ico')
 
-router.set('/static/*', st({
-  path: staticPath,
-  url: '/static'
-}))
 
-router.set('/favicon.ico', function serverFavicon (req, res, opts, cb) {
-  var iconPath = path.join(staticPath, 'favicon.ico')
-  favicon(iconPath)(req, res, cb)
-})
+router.set('/static/*', st({ path: staticPath, url: '/static' }))
+
+function layout (res) {
+  res.setHeader('content-type', 'text/html')
+  var tr = trumpet()
+  read('layout.html').pipe(tr).pipe(res)
+  return tr.createWriteStream('#body')
+}
+
+function read (file) {
+  return fs.createReadStream(path.join(staticPath, file))
+}
+
+router.set('/', )
+
+function handleRender(req, res, opts, cb) {
+  var store = createStore
+}
 
 var server = http.createServer(function (req, res) {
-  router(req, res, xtend({}, {beep: 'boop'}), onError)
+  var done = finalhandler(req, res)
 
-  function onError (err) {
-    if (err) {
-      res.statusCode = err.statusCode || 500
-      res.end(err.message)
-    }
-  }
+  series([
+    (cb) => logger('dev')(req, res, cb),
+    (cb) => favicon(iconPath)(req, res, cb),
+    (cb) => router(req, res, assign({}, {beep: 'boop'}), cb)
+  ], done)
 })
 
 server.listen({ fd: fd }, function () {

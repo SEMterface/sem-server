@@ -32,7 +32,7 @@
     "semterface": "github:semterface/semterface",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.3.3",
-    "socket.io-client": "^1.3.3",
+    "socket.io-client": "^1.4.3",
     "st": "^1.1.0",
     "tcp-bind": "^1.2.0",
     "through2": "^2.0.0",

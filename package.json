@@ -42,7 +42,7 @@
     "coverify": "^1.4.1",
     "nodemon": "^1.3.6",
     "portfinder": "^0.4.0",
-    "request": "^2.48.0",
+    "request": "^2.68.0",
     "snazzy": "^2.0.1",
     "standard": "^5.4.1",
     "standard-format": "^2.1.0",
